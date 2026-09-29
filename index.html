@@ -4,13 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Andrea Frehner</title>
-    <meta name="description" content="Andrea Frehner - Projektleiter und Maker aus Zuerich. Projekte, Experimente und Kontakt." />
+    <meta name="description" content="Andrea Frehner – Projektmanager und Maker aus Zürich. Projekte, Experimente und Kontakt." />
     <link rel="canonical" href="https://frehner.tech/" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://frehner.tech/" />
     <meta property="og:title" content="Andrea Frehner" />
-    <meta property="og:description" content="Projektleiter und Maker aus Zuerich." />
+    <meta property="og:description" content="Projektmanager und Maker aus Zürich." />
     <meta name="theme-color" content="#0e1c1b" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <style>
       :root{
         --bg:#0e1413; --panel:#141d1b; --line:#26332f; --ink:#e6ede9;
@@ -20,16 +23,18 @@
       *{box-sizing:border-box;}
       body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
         background:radial-gradient(120% 80% at 50% 0%,#12211f,var(--bg));color:var(--ink);
-        line-height:1.6;-webkit-font-smoothing:antialiased;}
+        line-height:1.65;-webkit-font-smoothing:antialiased;}
       .wrap{max-width:720px;margin:0 auto;padding:clamp(28px,7vw,72px) 20px 64px;}
+      .brand{display:flex;align-items:center;gap:16px;margin-bottom:8px;}
+      .brand img{width:56px;height:56px;flex:none;}
       header .eyebrow{font-family:ui-monospace,Menlo,monospace;color:var(--accent);letter-spacing:2px;
-        text-transform:uppercase;font-size:.8rem;}
-      h1{font-size:clamp(2.2rem,8vw,3.4rem);margin:.15em 0 .1em;letter-spacing:-.5px;}
-      .tagline{color:var(--muted);font-size:clamp(1.05rem,3.5vw,1.25rem);margin:0 0 1.6em;}
+        text-transform:uppercase;font-size:.78rem;}
+      h1{font-size:clamp(2.1rem,7.5vw,3.2rem);margin:.05em 0 .1em;letter-spacing:-.5px;}
+      .tagline{color:var(--muted);font-size:clamp(1.05rem,3.5vw,1.22rem);margin:.2em 0 0;}
       section{margin:2.4em 0;}
-      h2{font-size:1.15rem;text-transform:uppercase;letter-spacing:1px;color:var(--accent2);
-        border-bottom:1px solid var(--line);padding-bottom:.4em;margin-bottom:1em;}
-      p{color:#cdd8d3;}
+      h2{font-size:1.1rem;text-transform:uppercase;letter-spacing:1px;color:var(--accent2);
+        border-bottom:1px solid var(--line);padding-bottom:.4em;margin-bottom:.9em;}
+      p{color:#cdd8d3;margin:0 0 1em;}
       .cards{display:grid;gap:14px;}
       a.card{display:block;text-decoration:none;color:inherit;background:var(--panel);
         border:1px solid var(--line);border-radius:14px;padding:18px 20px;transition:border-color .2s,transform .1s;}
@@ -39,25 +44,38 @@
       a.card .go{color:var(--accent);font-family:ui-monospace,Menlo,monospace;font-size:.85rem;margin-top:.6em;}
       .contact a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;}
       .contact a:hover{border-bottom-color:var(--accent);}
-      footer{margin-top:3em;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding-top:1.2em;}
+      .coffee{display:inline-block;margin-top:.4em;background:var(--accent);color:#241a05;font-weight:700;
+        text-decoration:none;border-radius:10px;padding:10px 16px;}
+      .coffee:hover{filter:brightness(1.06);}
+      footer{margin-top:3em;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding-top:1.2em;
+        display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+      footer img{width:22px;height:22px;opacity:.85;}
     </style>
   </head>
   <body>
     <div class="wrap">
       <header>
-        <div class="eyebrow">Zuerich, Schweiz</div>
-        <!-- EDIT: dein Name -->
-        <h1>Andrea Frehner</h1>
-        <!-- EDIT: eine Zeile ueber dich -->
-        <p class="tagline">Projektleiter, Maker und Tueftler. Ich baue Dinge - digital und physisch.</p>
+        <div class="brand">
+          <img src="/logo.svg" alt="Familie Frehner Logo" />
+          <div>
+            <div class="eyebrow">Zürich, Schweiz</div>
+            <h1>Andrea Frehner</h1>
+          </div>
+        </div>
+        <p class="tagline">Projektmanager und Maker – ich baue Dinge, digital und physisch.</p>
       </header>
 
       <section>
-        <h2>Ueber mich</h2>
-        <!-- EDIT: kurzer Absatz. Nur so viel oeffentlich, wie du moechtest. -->
+        <h2>Über mich</h2>
         <p>
-          Kurzer Platzhalter-Text. Hier kannst du in zwei, drei Saetzen schreiben, was dich
-          ausmacht - beruflich, als Bastler, was auch immer du oeffentlich zeigen willst.
+          Ich bin in Zürich zu Hause und bewege mich beruflich im Projektmanagement – mit einer
+          Leidenschaft dafür, komplexe Vorhaben zu strukturieren, Teams zu führen und Dinge
+          tatsächlich fertig zu bringen.
+        </p>
+        <p>
+          Privat bin ich Tüftler durch und durch: vom 3D-Druck über Heimautomation bis zu kleinen
+          Web-Spielen und Bastelprojekten rund ums Zuhause. Wenn mich etwas interessiert, baue ich
+          es lieber selbst, als lange darüber zu reden – Klaxon weiter unten ist genau so ein Projekt.
         </p>
       </section>
 
@@ -66,24 +84,25 @@
         <div class="cards">
           <a class="card" href="https://klaxon.frehner.tech" target="_blank" rel="noopener">
             <div class="t">Klaxon</div>
-            <div class="d">Ein kooperatives Schrei-Partyspiel fuer den gleichen Raum - einfach die Seite oeffnen, kein Download.</div>
-            <div class="go">klaxon.frehner.tech &rarr;</div>
+            <div class="d">Ein kooperatives Schrei-Partyspiel für den gleichen Raum – einfach die Seite öffnen, kein Download.</div>
+            <div class="go">klaxon.frehner.tech →</div>
           </a>
-          <!-- EDIT: weitere Projekte als weitere <a class="card"> ... </a> -->
+          <!-- EDIT: weitere Projekte als zusätzliche <a class="card"> ... </a> -->
         </div>
       </section>
 
       <section class="contact">
         <h2>Kontakt</h2>
         <p>
-          <!-- EDIT: E-Mail aktiv, sobald die Weiterleitung eingerichtet ist -->
           E-Mail: <a href="mailto:andrea@frehner.tech">andrea@frehner.tech</a><br />
           GitHub: <a href="https://github.com/malaxy25" target="_blank" rel="noopener">github.com/malaxy25</a>
         </p>
+        <a class="coffee" href="https://buymeacoffee.com/malaxy" target="_blank" rel="noopener">☕ Buy me a coffee</a>
       </section>
 
       <footer>
-        &copy; <span id="y"></span> Andrea Frehner
+        <img src="/logo.svg" alt="" />
+        <span>© <span id="y"></span> Familie Frehner</span>
       </footer>
     </div>
     <script>document.getElementById("y").textContent=new Date().getFullYear();</script>
