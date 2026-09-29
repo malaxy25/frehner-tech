@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Andrea Frehner</title>
+    <meta name="description" content="Andrea Frehner - Projektleiter und Maker aus Zuerich. Projekte, Experimente und Kontakt." />
+    <link rel="canonical" href="https://frehner.tech/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://frehner.tech/" />
+    <meta property="og:title" content="Andrea Frehner" />
+    <meta property="og:description" content="Projektleiter und Maker aus Zuerich." />
+    <meta name="theme-color" content="#0e1c1b" />
+    <style>
+      :root{
+        --bg:#0e1413; --panel:#141d1b; --line:#26332f; --ink:#e6ede9;
+        --muted:#8ea39c; --accent:#f5a623; --accent2:#6fe0a8;
+        box-sizing:border-box; padding-top:env(safe-area-inset-top,0px);
+      }
+      *{box-sizing:border-box;}
+      body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+        background:radial-gradient(120% 80% at 50% 0%,#12211f,var(--bg));color:var(--ink);
+        line-height:1.6;-webkit-font-smoothing:antialiased;}
+      .wrap{max-width:720px;margin:0 auto;padding:clamp(28px,7vw,72px) 20px 64px;}
+      header .eyebrow{font-family:ui-monospace,Menlo,monospace;color:var(--accent);letter-spacing:2px;
+        text-transform:uppercase;font-size:.8rem;}
+      h1{font-size:clamp(2.2rem,8vw,3.4rem);margin:.15em 0 .1em;letter-spacing:-.5px;}
+      .tagline{color:var(--muted);font-size:clamp(1.05rem,3.5vw,1.25rem);margin:0 0 1.6em;}
+      section{margin:2.4em 0;}
+      h2{font-size:1.15rem;text-transform:uppercase;letter-spacing:1px;color:var(--accent2);
+        border-bottom:1px solid var(--line);padding-bottom:.4em;margin-bottom:1em;}
+      p{color:#cdd8d3;}
+      .cards{display:grid;gap:14px;}
+      a.card{display:block;text-decoration:none;color:inherit;background:var(--panel);
+        border:1px solid var(--line);border-radius:14px;padding:18px 20px;transition:border-color .2s,transform .1s;}
+      a.card:hover{border-color:var(--accent);transform:translateY(-1px);}
+      a.card .t{font-weight:700;font-size:1.1rem;}
+      a.card .d{color:var(--muted);font-size:.95rem;margin-top:.2em;}
+      a.card .go{color:var(--accent);font-family:ui-monospace,Menlo,monospace;font-size:.85rem;margin-top:.6em;}
+      .contact a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;}
+      .contact a:hover{border-bottom-color:var(--accent);}
+      footer{margin-top:3em;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding-top:1.2em;}
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <div class="eyebrow">Zuerich, Schweiz</div>
+        <!-- EDIT: dein Name -->
+        <h1>Andrea Frehner</h1>
+        <!-- EDIT: eine Zeile ueber dich -->
+        <p class="tagline">Projektleiter, Maker und Tueftler. Ich baue Dinge - digital und physisch.</p>
+      </header>
+
+      <section>
+        <h2>Ueber mich</h2>
+        <!-- EDIT: kurzer Absatz. Nur so viel oeffentlich, wie du moechtest. -->
+        <p>
+          Kurzer Platzhalter-Text. Hier kannst du in zwei, drei Saetzen schreiben, was dich
+          ausmacht - beruflich, als Bastler, was auch immer du oeffentlich zeigen willst.
+        </p>
+      </section>
+
+      <section>
+        <h2>Projekte</h2>
+        <div class="cards">
+          <a class="card" href="https://klaxon.frehner.tech" target="_blank" rel="noopener">
+            <div class="t">Klaxon</div>
+            <div class="d">Ein kooperatives Schrei-Partyspiel fuer den gleichen Raum - einfach die Seite oeffnen, kein Download.</div>
+            <div class="go">klaxon.frehner.tech &rarr;</div>
+          </a>
+          <!-- EDIT: weitere Projekte als weitere <a class="card"> ... </a> -->
+        </div>
+      </section>
+
+      <section class="contact">
+        <h2>Kontakt</h2>
+        <p>
+          <!-- EDIT: E-Mail aktiv, sobald die Weiterleitung eingerichtet ist -->
+          E-Mail: <a href="mailto:andrea@frehner.tech">andrea@frehner.tech</a><br />
+          GitHub: <a href="https://github.com/malaxy25" target="_blank" rel="noopener">github.com/malaxy25</a>
+        </p>
+      </section>
+
+      <footer>
+        &copy; <span id="y"></span> Andrea Frehner
+      </footer>
+    </div>
+    <script>document.getElementById("y").textContent=new Date().getFullYear();</script>
+  </body>
+</html>
