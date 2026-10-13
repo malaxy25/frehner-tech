@@ -41,6 +41,19 @@
       a.card .t{font-weight:700;font-size:1.1rem;}
       a.card .d{color:var(--muted);font-size:.95rem;margin-top:.2em;}
       a.card .go{color:var(--accent);font-family:ui-monospace,Menlo,monospace;font-size:.85rem;margin-top:.6em;}
+      div.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;}
+      div.card .t{font-weight:700;font-size:1.1rem;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
+      div.card .d{color:var(--muted);font-size:.95rem;margin-top:.2em;}
+      .version{font-family:ui-monospace,Menlo,monospace;font-size:.8rem;font-weight:400;color:var(--accent2);
+        border:1px solid var(--line);border-radius:999px;padding:1px 9px;}
+      .downloads{display:flex;flex-wrap:wrap;gap:10px;margin-top:.9em;align-items:center;}
+      .dl{display:inline-block;background:var(--accent);color:#241a05;font-weight:700;text-decoration:none;
+        border-radius:10px;padding:8px 14px;font-size:.95rem;}
+      .dl:hover{filter:brightness(1.06);}
+      .dl.secondary{background:none;color:var(--ink);border:1px solid var(--line);font-weight:600;}
+      .dl.secondary:hover{border-color:var(--accent);filter:none;}
+      .note{color:var(--muted);font-size:.85rem;margin-top:.7em;}
+      .note a{color:var(--accent);text-decoration:none;}
       .contact a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;}
       .contact a:hover{border-bottom-color:var(--accent);}
       .coffee{display:inline-block;margin-top:.4em;background:var(--accent);color:#241a05;font-weight:700;
@@ -79,7 +92,7 @@
         <p>
           Privat bin ich Tüftler durch und durch: vom 3D-Druck über Heimautomation bis zu kleinen
           Web-Spielen und Bastelprojekten rund ums Zuhause. Wenn mich etwas interessiert, baue ich
-          es lieber selbst, als lange darüber zu reden – Klaxon weiter unten ist genau so ein Projekt.
+          es lieber selbst, als lange darüber zu reden – Klaxon und Verbalis weiter unten sind genau solche Projekte.
         </p>
       </section>
 
@@ -91,6 +104,24 @@
             <div class="d">Ein kooperatives Schrei-Partyspiel für den gleichen Raum – einfach die Seite öffnen, kein Download.</div>
             <div class="go">klaxon.frehner.tech →</div>
           </a>
+          <div class="card" id="verbalis">
+            <div class="t">Verbalis <span class="version" id="verbalis-version">Version 0.7.19</span></div>
+            <div class="d">
+              Nimmt Gespräche auf – das eigene Mikrofon und den Ton aus Teams als zwei Spuren – und erstellt
+              daraus ein Transkript, auch aus Schweizerdeutsch. Erkennt, wer spricht, und läuft komplett lokal:
+              nichts verlässt den Computer.
+            </div>
+            <div class="downloads">
+              <a class="dl" id="verbalis-windows" href="https://github.com/malaxy25/verbalis/releases/download/v0.7.19/Verbalis-0.7.19-setup.exe">⬇ Download für Windows</a>
+              <a class="dl secondary" id="verbalis-mac" href="https://github.com/malaxy25/verbalis/releases/download/v0.7.19/Verbalis-0.7.19-macos-arm64.zip">⬇ Mac (Apple Silicon, experimentell)</a>
+              <a class="dl secondary" href="https://github.com/malaxy25/verbalis" target="_blank" rel="noopener">Quellcode auf GitHub →</a>
+            </div>
+            <div class="note">
+              Kostenlos und Open Source (MIT). Die Installationsdatei ist noch nicht signiert – Windows warnt beim
+              ersten Start («Weitere Informationen» → «Trotzdem ausführen»).
+              <a href="https://github.com/malaxy25/verbalis/releases/latest" target="_blank" rel="noopener">Alle Versionen und Neuerungen</a>
+            </div>
+          </div>
           <!-- EDIT: weitere Projekte als zusätzliche <a class="card"> ... </a> -->
         </div>
       </section>
@@ -132,9 +163,23 @@
 
       <footer>
         <img src="/wappen.png" alt="" />
-        <span>© <span id="y"></span> Familie Frehner · v1.3.0</span>
+        <span>© <span id="y"></span> Familie Frehner · v1.4.0</span>
       </footer>
     </div>
     <script>document.getElementById("y").textContent=new Date().getFullYear();</script>
+    <script>
+      // Verbalis: always show the newest release and link its files (the links above are the fallback)
+      fetch("https://api.github.com/repos/malaxy25/verbalis/releases/latest")
+        .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+        .then((release) => {
+          const version = release.tag_name.replace(/^v/, "");
+          document.getElementById("verbalis-version").textContent = "Version " + version;
+          const asset = (test) => (release.assets || []).find((a) => test.test(a.name));
+          const windows = asset(/setup\.exe$/i), mac = asset(/macos.*\.zip$/i);
+          if (windows) document.getElementById("verbalis-windows").href = windows.browser_download_url;
+          if (mac) document.getElementById("verbalis-mac").href = mac.browser_download_url;
+        })
+        .catch(() => {});
+    </script>
   </body>
 </html>
