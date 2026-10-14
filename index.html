@@ -105,15 +105,15 @@
             <div class="go">klaxon.frehner.tech →</div>
           </a>
           <div class="card" id="verbalis">
-            <div class="t">Verbalis <span class="version" id="verbalis-version">Version 0.7.19</span></div>
+            <div class="t">Verbalis <span class="version" id="verbalis-version">Version 0.7.26</span></div>
             <div class="d">
               Nimmt Gespräche auf – das eigene Mikrofon und den Ton aus Teams als zwei Spuren – und erstellt
               daraus ein Transkript, auch aus Schweizerdeutsch. Erkennt, wer spricht, und läuft komplett lokal:
               nichts verlässt den Computer.
             </div>
             <div class="downloads">
-              <a class="dl" id="verbalis-windows" href="https://github.com/malaxy25/verbalis/releases/download/v0.7.19/Verbalis-0.7.19-setup.exe">⬇ Download für Windows</a>
-              <a class="dl secondary" id="verbalis-mac" href="https://github.com/malaxy25/verbalis/releases/download/v0.7.19/Verbalis-0.7.19-macos-arm64.zip" title="Mac mit Apple Silicon – experimentell">⬇ Mac</a>
+              <a class="dl" id="verbalis-windows" href="https://github.com/malaxy25/verbalis/releases/download/v0.7.26/Verbalis-0.7.26-setup.exe">⬇ Download für Windows</a>
+              <a class="dl secondary" id="verbalis-mac" href="https://github.com/malaxy25/verbalis/releases/download/v0.7.26/Verbalis-0.7.26-macos-arm64.dmg" title="Mac mit Apple Silicon – experimentell">⬇ Mac</a>
               <a class="dl secondary" href="https://github.com/malaxy25/verbalis" target="_blank" rel="noopener">GitHub</a>
             </div>
             <div class="note">
@@ -163,7 +163,7 @@
 
       <footer>
         <img src="/wappen.png" alt="" />
-        <span>© <span id="y"></span> Familie Frehner · v1.4.1</span>
+        <span>© <span id="y"></span> Familie Frehner · v1.4.2</span>
       </footer>
     </div>
     <script>document.getElementById("y").textContent=new Date().getFullYear();</script>
@@ -175,7 +175,7 @@
           const version = release.tag_name.replace(/^v/, "");
           document.getElementById("verbalis-version").textContent = "Version " + version;
           const asset = (test) => (release.assets || []).find((a) => test.test(a.name));
-          const windows = asset(/setup\.exe$/i), mac = asset(/macos.*\.zip$/i);
+          const windows = asset(/setup\.exe$/i), mac = asset(/macos.*\.dmg$/i) || asset(/macos.*\.zip$/i);   // the DMG for a first install
           if (windows) document.getElementById("verbalis-windows").href = windows.browser_download_url;
           if (mac) document.getElementById("verbalis-mac").href = mac.browser_download_url;
         })
