@@ -1,12 +1,12 @@
 # frehner.tech
 
-Personal site (static, no build step): `index.html`, subpages in `<name>/index.html`, shared `style.css` and `site.js`.
+Personal site (static, no build step). Everything that goes online is in `public/`: `index.html`, subpages in `<name>/index.html`, shared `style.css` and `site.js`.
 
 ## Deploy (Render Static Site)
 1. Push this repo to GitHub (e.g. `malaxy25/frehner-tech`).
 2. Render -> New -> Static Site -> connect the repo.
    - Build command: *(leave empty)*
-   - Publish directory: `.`
+   - Publish directory: `public`
 3. Settings -> Custom Domains -> add `frehner.tech` (and optionally `www.frehner.tech`).
 4. Render shows an **A record IP** for the apex domain. In Namecheap -> Advanced DNS:
    - Type **A Record**, Host **@**, Value **<the IP Render shows>**, TTL Automatic.
@@ -14,4 +14,4 @@ Personal site (static, no build step): `index.html`, subpages in `<name>/index.h
 5. Wait for DNS + TLS. Done.
 
 ## Edit
-Content lives in `index.html` and `platzhalter/index.html`. Look for the `EDIT:` comments. See `CLAUDE.md` for the rules (mobile, share previews, versioning).
+Content lives in `public/index.html` and `public/platzhalter/index.html`. Look for the `EDIT:` comments. See `CLAUDE.md` for the rules (mobile, share previews, versioning).
