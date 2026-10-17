@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Welcher Frühstücks-Typ bist du?</title>
+    <meta name="robots" content="noindex" />
+    <meta name="description" content="9 Fragen, 1 Minute: Finde heraus, welcher Frühstücks-Typ du bist." />
+    <link rel="canonical" href="https://frehner.tech/muesli/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://frehner.tech/muesli/" />
+    <meta property="og:title" content="Welcher Frühstücks-Typ bist du?" />
+    <meta property="og:description" content="9 Fragen, 1 Minute: Finde es heraus." />
+    <meta property="og:site_name" content="frehner.tech" />
+    <meta property="og:locale" content="de_CH" />
+    <meta property="og:image" content="https://frehner.tech/icon-192.png" />
+    <meta property="og:image:width" content="192" />
+    <meta property="og:image:height" content="192" />
+    <meta property="og:image:alt" content="Familienwappen Frehner" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="theme-color" content="#0e1c1b" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="wrap quiz">
+      <header>
+        <div class="eyebrow">Kleine Umfrage</div>
+        <h1>Welcher Frühstücks-Typ bist du?</h1>
+        <p class="tagline">9 Fragen, 1 Minute. Einfach antworten, ohne lange zu überlegen.</p>
+      </header>
+
+      <main id="umfrage" tabindex="-1" aria-live="polite"></main>
+
+      <p class="note">Dein Name und deine Antworten werden in einer Google-Tabelle von Andrea gespeichert und nur dafür verwendet.</p>
+
+      <footer>
+        <img src="/wappen.png" alt="" />
+        <span>© <span id="y"></span> Familie Frehner · v1.7.0</span>
+      </footer>
+    </div>
+    <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
+    <script>
+      // EDIT: Fragen, Antworten und Sprüche hier anpassen. Jede Antwort gibt Punkte für einen oder mehrere Geschmäcker;
+      // der Geschmack mit den meisten Punkten gewinnt (bei Gleichstand zufällig). Neue Fragen ergeben im Sheet neue Spalten.
+      window.UMFRAGE = {
+        id: "muesli",
+        endpoint: "",   // EDIT: /exec-URL der Apps-Script-Web-App (tools/umfrage/apps-script.js)
+        intro: "Wie heisst du?",
+        results: {
+          schoko: {
+            name: "Schoko", emoji: "🍫",
+            lines: [
+              "Du sagst, du frühstückst gesund. Wir haben dich durchschaut.",
+              "Für dich ist Schokolade kein Dessert, sondern eine Lebenseinstellung.",
+              "Dunkel, süss und ein kleines bisschen verführerisch – genau wie dein perfekter Morgen.",
+            ],
+          },
+          apfel: {
+            name: "Apfel-Zimt", emoji: "🍎",
+            lines: [
+              "Du riechst nach Weihnachtsmarkt. Auch im Juli.",
+              "Gemütlichkeit ist für dich kein Zustand, sondern ein Beruf.",
+              "Ein Apfel am Tag hält den Doktor fern. Mit Zimt bleibt sogar der Montag weg.",
+            ],
+          },
+          aprikose: {
+            name: "Aprikose", emoji: "🍑",
+            lines: [
+              "Du bist ein Sonnenschein auf zwei Beinen. Auch um 7 Uhr morgens.",
+              "Bei dir ist immer Sommer, egal was das Thermometer sagt.",
+              "Fruchtig, frisch und ein bisschen wild – wir haben es geahnt.",
+            ],
+          },
+        },
+        questions: [
+          { text: "Wie startest du am liebsten in den Tag?", answers: [
+            { text: "Starker Kaffee und etwas Süsses", points: { schoko: 2 } },
+            { text: "Gemütlich mit Tee und Zeitung", points: { apfel: 2 } },
+            { text: "Fenster auf, Sonne rein", points: { aprikose: 2 } },
+            { text: "Snooze-Taste. Dreimal.", points: { schoko: 1, apfel: 1 } },
+          ] },
+          { text: "Welches Dessert nimmst du?", answers: [
+            { text: "Mousse au Chocolat", points: { schoko: 2 } },
+            { text: "Warmer Apfelstrudel mit Vanillesauce", points: { apfel: 2 } },
+            { text: "Aprikosenwähe", points: { aprikose: 2 } },
+          ] },
+          { text: "Deine Traumferien?", answers: [
+            { text: "Städtetrip mit Cafés und Confiserien", points: { schoko: 2 } },
+            { text: "Berghütte mit Kamin und Schnee", points: { apfel: 2 } },
+            { text: "Mittelmeer, Markt und Sonne", points: { aprikose: 2 } },
+          ] },
+          { text: "Deine Lieblingsjahreszeit?", answers: [
+            { text: "Winter", points: { schoko: 2 } },
+            { text: "Herbst", points: { apfel: 2 } },
+            { text: "Sommer", points: { aprikose: 2 } },
+            { text: "Frühling", points: { aprikose: 1, apfel: 1 } },
+          ] },
+          { text: "Wie süss darf es sein?", answers: [
+            { text: "So süss wie möglich", points: { schoko: 2 } },
+            { text: "Süss, aber mit Würze", points: { apfel: 2 } },
+            { text: "Lieber fruchtig-frisch", points: { aprikose: 2 } },
+          ] },
+          { text: "Was ist sicher in deinem Vorratsschrank?", answers: [
+            { text: "Eine angefangene Tafel Schoggi (mindestens)", points: { schoko: 2 } },
+            { text: "Zimt, Nelken und Lebkuchengewürz", points: { apfel: 2 } },
+            { text: "Dörrfrüchte", points: { aprikose: 2 } },
+          ] },
+          { text: "Dein perfekter Sonntag?", answers: [
+            { text: "Sofa, Decke, Serie", points: { schoko: 2 } },
+            { text: "Waldspaziergang, danach Tee", points: { apfel: 2 } },
+            { text: "Velotour mit Picknick", points: { aprikose: 2 } },
+          ] },
+          { text: "Welche Farbe passt zu dir?", answers: [
+            { text: "Dunkelbraun und Gold", points: { schoko: 2 } },
+            { text: "Rot und Kupfer", points: { apfel: 2 } },
+            { text: "Orange und Sonnengelb", points: { aprikose: 2 } },
+          ] },
+          { text: "Was trinkst du am liebsten?", answers: [
+            { text: "Heisse Schokolade", points: { schoko: 2 } },
+            { text: "Glühwein oder Punsch", points: { apfel: 2 } },
+            { text: "Frisch gepresster Saft", points: { aprikose: 2 } },
+          ] },
+        ],
+      };
+    </script>
+    <script src="/umfrage.js"></script>
+  </body>
+</html>
