@@ -10,66 +10,49 @@
     <meta property="og:url" content="https://frehner.tech/" />
     <meta property="og:title" content="Andrea Frehner" />
     <meta property="og:description" content="Projektmanager und Maker aus Zürich." />
+    <meta property="og:site_name" content="frehner.tech" />
+    <meta property="og:locale" content="de_CH" />
+    <meta property="og:image" content="https://frehner.tech/icon-192.png" />
+    <meta property="og:image:width" content="192" />
+    <meta property="og:image:height" content="192" />
+    <meta property="og:image:alt" content="Familienwappen Frehner" />
+    <meta name="twitter:card" content="summary" />
     <meta name="theme-color" content="#0e1c1b" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <style>
-      :root{
-        --bg:#0e1413; --panel:#141d1b; --line:#26332f; --ink:#e6ede9;
-        --muted:#8ea39c; --accent:#f5a623; --accent2:#6fe0a8;
-        box-sizing:border-box; padding-top:env(safe-area-inset-top,0px);
-      }
-      *{box-sizing:border-box;}
-      body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-        background:radial-gradient(120% 80% at 50% 0%,#12211f,var(--bg));color:var(--ink);
-        line-height:1.65;-webkit-font-smoothing:antialiased;}
-      .wrap{max-width:720px;margin:0 auto;padding:clamp(28px,7vw,72px) 20px 64px;}
-      .brand{display:flex;align-items:center;gap:16px;margin-bottom:8px;}
-      .brand img{width:84px;height:84px;flex:none;}
-      header .eyebrow{font-family:ui-monospace,Menlo,monospace;color:var(--accent);letter-spacing:2px;
-        text-transform:uppercase;font-size:.78rem;}
-      h1{font-size:clamp(2.1rem,7.5vw,3.2rem);margin:.05em 0 .1em;letter-spacing:-.5px;}
-      .tagline{color:var(--muted);font-size:clamp(1.05rem,3.5vw,1.22rem);margin:.2em 0 0;}
-      section{margin:2.4em 0;}
-      h2{font-size:1.1rem;text-transform:uppercase;letter-spacing:1px;color:var(--accent2);
-        border-bottom:1px solid var(--line);padding-bottom:.4em;margin-bottom:.9em;}
-      p{color:#cdd8d3;margin:0 0 1em;}
-      .cards{display:grid;gap:14px;}
-      a.card{display:block;text-decoration:none;color:inherit;background:var(--panel);
-        border:1px solid var(--line);border-radius:14px;padding:18px 20px;transition:border-color .2s,transform .1s;}
-      a.card:hover{border-color:var(--accent);transform:translateY(-1px);}
-      a.card .t{font-weight:700;font-size:1.1rem;}
-      a.card .d{color:var(--muted);font-size:.95rem;margin-top:.2em;}
-      a.card .go{color:var(--accent);font-family:ui-monospace,Menlo,monospace;font-size:.85rem;margin-top:.6em;}
-      div.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;}
-      div.card .t{font-weight:700;font-size:1.1rem;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
-      div.card .d{color:var(--muted);font-size:.95rem;margin-top:.2em;}
-      .version{font-family:ui-monospace,Menlo,monospace;font-size:.8rem;font-weight:400;color:var(--accent2);
-        border:1px solid var(--line);border-radius:999px;padding:1px 9px;}
-      .downloads{display:flex;flex-wrap:wrap;gap:10px;margin-top:.9em;align-items:center;}
-      .dl{display:inline-block;background:var(--accent);color:#241a05;font-weight:700;text-decoration:none;
-        border-radius:10px;padding:8px 14px;font-size:.95rem;}
-      .dl:hover{filter:brightness(1.06);}
-      .dl.secondary{background:none;color:var(--ink);border:1px solid var(--line);font-weight:600;}
-      .dl.secondary:hover{border-color:var(--accent);filter:none;}
-      .note{color:var(--muted);font-size:.85rem;margin-top:.7em;}
-      .note a{color:var(--accent);text-decoration:none;}
-      .contact a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;}
-      .contact a:hover{border-bottom-color:var(--accent);}
-      .coffee{display:inline-block;margin-top:.4em;background:var(--accent);color:#241a05;font-weight:700;
-        text-decoration:none;border-radius:10px;padding:10px 16px;}
-      .coffee:hover{filter:brightness(1.06);}
-      .contact a.coffee{color:#241a05;border-bottom:none;}
-      .heritage-grid{display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;}
-      .heritage-grid .crest{width:170px;height:170px;flex:none;}
-      .heritage-grid .htext{flex:1;min-width:240px;}
-      @media (max-width:520px){.heritage-grid{justify-content:center;text-align:left;} .heritage-grid .crest{width:130px;height:130px;}}
-      footer{margin-top:3em;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding-top:1.2em;
-        display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-      footer img{width:22px;height:22px;opacity:.85;}
-    </style>
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
+    <nav class="nav" aria-label="Hauptmenü">
+      <div class="nav-inner">
+        <a class="nav-home" href="/"><img src="/wappen.png" alt="" />frehner.tech</a>
+        <ul class="menu" id="menu">
+          <li><a href="/#ueber-mich">Über mich</a></li>
+          <li class="has-sub">
+            <button class="sub-toggle" type="button" aria-expanded="false" aria-controls="sub-projekte">
+              Projekte
+              <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+            </button>
+            <ul class="submenu" id="sub-projekte">
+              <li><a href="/#projekte">Alle Projekte</a></li>
+              <li><a href="/#klaxon">Klaxon</a></li>
+              <li><a href="/#verbalis">Verbalis</a></li>
+            </ul>
+          </li>
+          <li><a href="/platzhalter/">Platzhalter</a></li>
+          <li><a href="/#herkunft">Herkunft</a></li>
+          <li><a href="/#kontakt">Kontakt</a></li>
+        </ul>
+        <button class="nav-icon share" type="button" aria-label="Seite teilen">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5M5 13v6a2 2 0 002 2h10a2 2 0 002-2v-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="share-label">Teilen</span>
+        </button>
+        <button class="nav-icon nav-toggle" type="button" aria-label="Menü" aria-expanded="false" aria-controls="menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </nav>
     <div class="wrap">
       <header>
         <div class="brand">
@@ -82,7 +65,7 @@
         <p class="tagline">Projektmanager und Maker – ich baue Dinge, digital und physisch.</p>
       </header>
 
-      <section>
+      <section id="ueber-mich">
         <h2>Über mich</h2>
         <p>
           Ich bin in Zürich zu Hause und bewege mich beruflich im Projektmanagement – mit einer
@@ -96,10 +79,10 @@
         </p>
       </section>
 
-      <section>
+      <section id="projekte">
         <h2>Projekte</h2>
         <div class="cards">
-          <a class="card" href="https://klaxon.frehner.tech" target="_blank" rel="noopener">
+          <a class="card" id="klaxon" href="https://klaxon.frehner.tech" target="_blank" rel="noopener">
             <div class="t">Klaxon</div>
             <div class="d">Ein kooperatives Schrei-Partyspiel für den gleichen Raum – einfach die Seite öffnen, kein Download.</div>
             <div class="go">klaxon.frehner.tech →</div>
@@ -108,7 +91,7 @@
             <div class="t">Verbalis <span class="version" id="verbalis-version">Version 0.7.29</span></div>
             <div class="d">
               Nimmt Gespräche auf – das eigene Mikrofon und den Ton aus Teams als zwei Spuren – und erstellt
-              daraus ein Transkript, auch aus Schweizerdeutsch. Erkennt, wer spricht, und läuft komplett lokal:
+              daraus ein Transkript, auch aus Schweizerdeutsch. Erkennt die Sprechenden und läuft komplett lokal:
               nichts verlässt den Computer.
             </div>
             <div class="downloads">
@@ -127,7 +110,7 @@
         </div>
       </section>
 
-      <section class="contact">
+      <section class="contact" id="kontakt">
         <h2>Kontakt</h2>
         <p>
           E-Mail: <a href="mailto:andrea@frehner.tech">andrea@frehner.tech</a><br />
@@ -136,7 +119,7 @@
         <a class="coffee" href="https://buymeacoffee.com/malaxy" target="_blank" rel="noopener">☕ Buy me a coffee</a>
       </section>
 
-      <section>
+      <section id="herkunft">
         <h2>Woher der Name kommt</h2>
         <div class="heritage-grid">
           <img class="crest" src="/wappen.png" alt="Familienwappen Frehner – weisses Lamm in Blau" />
@@ -151,7 +134,7 @@
             <p>
               Die Familie stammt aus dem <b>Appenzellerland</b>, genauer aus <b>Urnäsch</b>.
               Schon früh finden sich Spuren: 1392 gibt ein Erwin Vrener das Bürgerrecht von
-              St. Gallen auf, und 1405 fällt ein Frehner von Urnäsch in der Schlacht am Stoss.
+              St. Gallen auf und 1405 fällt ein Frehner von Urnäsch in der Schlacht am Stoss.
             </p>
             <p>
               Das <b>Wappen</b> zeigt in Blau ein <b>weisses Lamm</b> – nach der Ratsscheibe von
@@ -164,10 +147,10 @@
 
       <footer>
         <img src="/wappen.png" alt="" />
-        <span>© <span id="y"></span> Familie Frehner · v1.4.3</span>
+        <span>© <span id="y"></span> Familie Frehner · v1.5.0</span>
       </footer>
     </div>
-    <script>document.getElementById("y").textContent=new Date().getFullYear();</script>
+    <script src="/site.js"></script>
     <script>
       // Verbalis: always show the newest release and link its files (the links above are the fallback)
       fetch("https://api.github.com/repos/malaxy25/verbalis/releases/latest")

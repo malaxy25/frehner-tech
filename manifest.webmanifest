@@ -1,0 +1,12 @@
+{
+  "name": "Andrea Frehner",
+  "short_name": "Frehner",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0e1413",
+  "theme_color": "#0e1c1b",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

@@ -1,6 +1,6 @@
 # frehner.tech
 
-Personal one-page site (static, no build step). Just `index.html`.
+Personal site (static, no build step): `index.html`, subpages in `<name>/index.html`, shared `style.css` and `site.js`.
 
 ## Deploy (Render Static Site)
 1. Push this repo to GitHub (e.g. `malaxy25/frehner-tech`).
@@ -14,4 +14,4 @@ Personal one-page site (static, no build step). Just `index.html`.
 5. Wait for DNS + TLS. Done.
 
 ## Edit
-Everything is in `index.html`. Look for the `EDIT:` comments.
+Content lives in `index.html` and `platzhalter/index.html`. Look for the `EDIT:` comments. See `CLAUDE.md` for the rules (mobile, share previews, versioning).
