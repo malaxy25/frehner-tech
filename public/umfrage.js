@@ -1,12 +1,14 @@
-// Generic quiz: renders window.UMFRAGE (see public/umfrage/index.html), scores the answers,
-// shows the result and sends everything to the Apps Script (tools/umfrage/apps-script.js).
+// Generic quiz: renders window.UMFRAGE (see public/umfrage/config.js), scores the answers,
+// shows the result (or only a thank-you with showResult: false) and sends everything to the
+// Apps Script (tools/umfrage/apps-script.js).
 // Config shape:
-//   { id, endpoint, results: { key: { name, emoji, lines: [..] } },
+//   { id, endpoint, showResult, thanks, results: { key: { name, emoji, lines: [..] } },
 //     questions: [ { text, answers: [ { text, points: { key: n } } ] } ] }
 (function () {
   const cfg = window.UMFRAGE;
   const app = document.getElementById("umfrage");
   const storeKey = "umfrage-" + cfg.id;
+  const reveal = cfg.showResult !== false;
   let name = "";
   let step = 0;
   let picks = [];
@@ -105,24 +107,31 @@
     const best = Math.max(...Object.values(scores));
     const key = shuffle(Object.keys(scores).filter((k) => scores[k] === best))[0];   // tie: random
     const r = cfg.results[key];
-    const line = r.lines[Math.floor(Math.random() * r.lines.length)];
     const answers = {};
     cfg.questions.forEach((q, n) => (answers[q.text] = q.answers[picks[n]].text));
     const payload = {
-      survey: cfg.id, name, result: r.name, line,
+      survey: cfg.id, name, result: r.name,
       scores: Object.keys(scores).map((k) => cfg.results[k].name + " " + scores[k]).join(", "),
       answers,
     };
-    const state = { name, key, line, sent: false, payload };
+    // a hidden result is not kept in the browser either
+    const state = reveal
+      ? { name, key, line: r.lines[Math.floor(Math.random() * r.lines.length)], sent: false, payload }
+      : { name, sent: false, payload };
     save(state);
     result(state, payload);
   }
 
   function result(state, payload) {
-    const r = cfg.results[state.key];
     const card = el("div", "quiz-card quiz-result");
-    card.append(el("div", "quiz-step", state.name + ", du bist …"), el("div", "quiz-emoji", r.emoji),
-      el("h2", "quiz-flavor", r.name), el("p", "quiz-line", state.line));
+    if (reveal) {
+      const r = cfg.results[state.key];
+      card.append(el("div", "quiz-step", state.name + ", du bist …"), el("div", "quiz-emoji", r.emoji),
+        el("h2", "quiz-flavor", r.name), el("p", "quiz-line", state.line));
+    } else {
+      card.append(el("div", "quiz-emoji", "🤫"), el("h2", "quiz-flavor", "Danke, " + state.name + "!"),
+        el("p", "quiz-line", cfg.thanks || "Deine Antworten sind gespeichert."));
+    }
     const status = el("p", "quiz-status");
     status.setAttribute("role", "status");
     card.append(status);
@@ -146,7 +155,7 @@
         const res = await fetch(cfg.endpoint, { method: "POST", body: JSON.stringify(payload) });
         if (!res.ok || (await res.text()).trim() !== "ok") throw new Error("not ok");
       }
-      status.textContent = "Gespeichert. Danke fürs Mitmachen!";
+      status.textContent = reveal ? "Gespeichert. Danke fürs Mitmachen!" : "✓ Gespeichert";
       save(Object.assign(state, { sent: true, payload: null }));
     } catch (_) {
       status.textContent = "Speichern hat nicht geklappt. ";
@@ -159,7 +168,7 @@
   }
 
   const done = load();
-  if (done && done.key && cfg.results[done.key]) {
+  if (done && done.name && (reveal ? cfg.results[done.key] : true)) {
     name = done.name;
     result(done, done.sent ? null : done.payload);   // retry a send that failed last time
   } else {

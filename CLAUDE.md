@@ -9,14 +9,18 @@ Persönliche Website von Andrea Frehner. Statisches HTML/CSS/JS ohne Build-Schri
   - `style.css` – gemeinsame Styles aller Seiten (Farben als Variablen in `:root`)
   - `site.js` – gemeinsames Script: Jahr im Footer, Navigation (Hamburger + Untermenü)
   - `manifest.webmanifest`, `*.png` – Icons, Wappen, Homescreen-Manifest
-  - `umfrage.js` – generischer Ablauf für Umfragen (Name → Fragen → Ergebnis → Versand)
+  - `umfrage/config.js` – Inhalt der Umfrage: Fragen, Punkte, Geschmäcker (Name, Emoji, Farbe), Sprüche, Begründungssatz
+  - `umfrage.js` – generischer Ablauf für Umfragen (Name → Fragen → Ergebnis bzw. Danke → Versand)
 - `tools/umfrage/apps-script.js` – Google Apps Script: speichert Antworten im Google Sheet, schickt E-Mail. Nicht öffentlich.
+- `tools/karten/karten.html` – lokal öffnen, CSV aus dem Sheet hineinziehen → druckfertige Visitenkarten (85×55 mm, 10 pro A4). Liest `public/umfrage/config.js`.
 - Im Root nur Projektdateien (`CLAUDE.md`, `README.md`, `tools/`), die nicht öffentlich sein sollen.
 
 Die Navigation (`<nav class="nav">`) steht als identischer Block in jeder Seite. Bei Änderungen am Menü **alle Seiten** anpassen; auf der jeweiligen Seite den eigenen Link mit `aria-current="page"` markieren. Links auf Abschnitte der Startseite immer absolut (`/#projekte`), damit sie auch von Unterseiten funktionieren.
 
 ## Umfragen
-- Inhalt (Fragen, Antworten, Punkte, Ergebnisse, Sprüche) steht nur im `window.UMFRAGE`-Block der Seite. `umfrage.js` und das Apps Script bleiben bei Änderungen unberührt.
+- Inhalt (Fragen, Antworten, Punkte, Ergebnisse, Sprüche) steht nur in `public/umfrage/config.js`. `umfrage.js`, Apps Script und Karten bleiben bei Änderungen unberührt.
+- `showResult: false`: Teilnehmende sehen nur ein Danke, das Ergebnis kommt erst auf die Karte (Weihnachtsgeschenk). Ergebnis und Spruch nie auf der Seite oder im Browser-Speicher zeigen.
+- Sprüche werden erst beim Kartendruck gewählt, Antworttexte sind auch Teil des Begründungssatzes auf der Karte (kurz halten).
 - Nur Auswahl-Antworten, kein Freitext. Jede Antwort vergibt Punkte an Ergebnis-Schlüssel; Punkte pro Ergebnis ausgeglichen halten.
 - Sheet: ein Tabellenblatt pro Umfrage-`id`, eine Spalte pro Fragetext. Geänderter Fragetext = neue Spalte.
 - Der Satz zum Datenschutz (Google-Tabelle) bleibt auf jeder Umfrageseite. Die Umfrage-`id` (= Tabellenblatt im Sheet) nicht ändern, sonst beginnt ein neues Blatt.

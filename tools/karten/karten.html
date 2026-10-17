@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Karten drucken</title>
+    <!--
+      Karten zur Umfrage /umfrage/ – nur lokal, liegt bewusst nicht in public/ (Namen bleiben offline).
+      1. Google Sheet → Blatt «muesli» → Datei → Herunterladen → CSV
+      2. Diese Datei im Browser öffnen (Doppelklick) und die CSV hineinziehen
+      3. Texte bei Bedarf direkt auf der Karte anklicken und ändern, «Drucken» → A4, Skalierung 100 %, ohne Ränder
+      Inhalt (Geschmäcker, Farben, Sprüche, Begründungssatz) kommt aus public/umfrage/config.js.
+    -->
+    <style>
+      :root{--ink:#2a2622;--muted:#7a716a;--line:#d9d2cb;--bg:#efeae4;}
+      *{box-sizing:border-box;}
+      body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+      .controls{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);padding:12px 16px;
+        display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
+      .controls h1{font-size:1.05rem;margin:0 12px 0 0;}
+      .controls button,.controls label.file{font:inherit;font-size:.92rem;border:1px solid var(--line);background:#fff;border-radius:8px;
+        padding:7px 12px;cursor:pointer;}
+      .controls button.primary{background:#2a2622;color:#fff;border-color:#2a2622;}
+      .controls input[type=file]{display:none;}
+      .info{color:var(--muted);font-size:.88rem;}
+      .warn{color:#b3372b;}
+      .drop{margin:40px auto;max-width:520px;border:2px dashed var(--line);border-radius:14px;padding:40px 24px;text-align:center;
+        color:var(--muted);background:#fff;}
+      .drop.over{border-color:#2a2622;color:var(--ink);}
+      .pages{padding:24px 0;display:flex;flex-direction:column;align-items:center;gap:24px;}
+      .sheet{width:210mm;height:297mm;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.12);
+        padding:11mm 20mm;display:grid;grid-template-columns:repeat(2,85mm);grid-auto-rows:55mm;align-content:start;}
+      .card{position:relative;outline:.2mm dashed #c8c0b8;padding:4.5mm 5mm 4mm 7.5mm;display:flex;flex-direction:column;overflow:hidden;}
+      .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2.6mm;background:var(--c);}
+      .top{display:flex;align-items:center;gap:3mm;}
+      .emoji{font-size:22pt;line-height:1;}
+      .who{font-size:7.5pt;color:var(--muted);letter-spacing:.3pt;}
+      .flavor{font-size:15pt;font-weight:800;color:var(--c);line-height:1.1;}
+      .line{font-size:9pt;line-height:1.35;margin-top:2.6mm;}
+      .reason{font-size:6.6pt;line-height:1.35;color:var(--muted);font-style:italic;margin-top:auto;padding-top:1.5mm;}
+      [contenteditable]:hover{background:#fff6dc;}
+      [contenteditable]:focus{outline:1px solid #e0b84a;background:#fff6dc;}
+      .tools{position:absolute;right:1.5mm;top:1.5mm;display:none;gap:1mm;}
+      .card:hover .tools{display:flex;}
+      .tools button{font-size:9px;border:1px solid var(--line);background:#fff;border-radius:4px;padding:2px 5px;cursor:pointer;}
+      .dup{position:absolute;right:2mm;bottom:1.5mm;font-size:7px;color:#b3372b;}
+      @page{size:A4;margin:0;}
+      @media print{
+        body{background:#fff;}
+        .controls,.drop,.tools,.dup{display:none !important;}
+        .pages{padding:0;gap:0;}
+        .sheet{box-shadow:none;break-after:page;}
+        [contenteditable]{background:none !important;outline:none !important;}
+      }
+    </style>
+  </head>
+  <body>
+    <div class="controls">
+      <h1>Karten</h1>
+      <label class="file">CSV wählen <input type="file" id="file" accept=".csv,text/csv" /></label>
+      <button type="button" id="reshuffle">Alle Sprüche neu mischen</button>
+      <button type="button" class="primary" id="print">Drucken</button>
+      <span class="info" id="info">Noch keine Daten geladen.</span>
+    </div>
+    <div class="drop" id="drop">CSV aus dem Google Sheet hierher ziehen<br />(Datei → Herunterladen → Kommagetrennte Werte)</div>
+    <div class="pages" id="pages"></div>
+
+    <script src="../../public/umfrage/config.js"></script>
+    <script>
+      const cfg = window.UMFRAGE;
+      const PER_SHEET = 10;
+      let people = [];
+
+      const pick = (list) => list[Math.floor(Math.random() * list.length)];
+      const shuffle = (list) => list.map((v) => [Math.random(), v]).sort((a, b) => a[0] - b[0]).map((x) => x[1]);
+
+      // RFC 4180 CSV (quoted fields, commas and line breaks inside quotes)
+      function parseCsv(text) {
+        const rows = [];
+        let row = [], field = "", quoted = false;
+        text = text.replace(/^﻿/, "");
+        for (let i = 0; i < text.length; i++) {
+          const ch = text[i];
+          if (quoted) {
+            if (ch === '"' && text[i + 1] === '"') { field += '"'; i++; }
+            else if (ch === '"') quoted = false;
+            else field += ch;
+          } else if (ch === '"') quoted = true;
+          else if (ch === ",") { row.push(field); field = ""; }
+          else if (ch === "\n" || ch === "\r") {
+            if (ch === "\r" && text[i + 1] === "\n") i++;
+            row.push(field); rows.push(row); row = []; field = "";
+          } else field += ch;
+        }
+        if (field || row.length) { row.push(field); rows.push(row); }
+        return rows.filter((r) => r.some((c) => c.trim()));
+      }
+
+      // Points every answer of this person gave to each result
+      function contributions(answers) {
+        const list = [];
+        cfg.questions.forEach((q) => {
+          const a = q.answers.find((x) => x.text === answers[q.text]);
+          if (a) list.push(a);
+        });
+        return list;
+      }
+
+      function resultKey(row, answers) {
+        const byName = Object.keys(cfg.results).find((k) => cfg.results[k].name === row.Ergebnis);
+        if (byName) return byName;
+        const scores = {};
+        contributions(answers).forEach((a) =>
+          Object.entries(a.points || {}).forEach(([k, n]) => (scores[k] = (scores[k] || 0) + n)));
+        const best = Math.max(0, ...Object.values(scores));
+        return Object.keys(scores).find((k) => scores[k] === best) || null;
+      }
+
+      function reasonFor(p) {
+        const top = shuffle(contributions(p.answers).filter((a) => (a.points || {})[p.key] > 0))
+          .sort((a, b) => b.points[p.key] - a.points[p.key]);
+        if (top.length < 2 || !cfg.reason) return "";
+        return cfg.reason.replace("{a}", top[0].text).replace("{b}", top[1].text).replace("{result}", cfg.results[p.key].name);
+      }
+
+      function load(text) {
+        const rows = parseCsv(text);
+        const header = rows.shift() || [];
+        if (!header.includes("Name")) return info("Spalte «Name» fehlt – ist das die CSV aus dem Google Sheet?", true);
+        const seen = {};
+        people = [];
+        rows.forEach((cells) => {
+          const row = {};
+          header.forEach((h, i) => (row[h] = (cells[i] || "").trim()));
+          if (!row.Name) return;
+          const answers = {};
+          cfg.questions.forEach((q) => (answers[q.text] = row[q.text]));
+          const key = resultKey(row, answers);
+          if (!key) return;
+          const id = row.Name.toLowerCase();
+          const p = { name: row.Name, key, answers, line: pick(cfg.results[key].lines), dup: !!seen[id] };
+          p.reason = reasonFor(p);
+          if (seen[id]) { seen[id].dup = true; people[people.indexOf(seen[id])] = Object.assign(p, { dup: true }); }   // latest answer wins
+          else people.push(p);
+          seen[id] = p;
+        });
+        render();
+      }
+
+      function info(text, warn) {
+        const el = document.getElementById("info");
+        el.textContent = text;
+        el.className = warn ? "info warn" : "info";
+      }
+
+      function render() {
+        const pages = document.getElementById("pages");
+        pages.replaceChildren();
+        document.getElementById("drop").style.display = people.length ? "none" : "";
+        for (let s = 0; s < people.length; s += PER_SHEET) {
+          const sheet = document.createElement("div");
+          sheet.className = "sheet";
+          people.slice(s, s + PER_SHEET).forEach((p) => sheet.append(card(p)));
+          pages.append(sheet);
+        }
+        const count = {};
+        people.forEach((p) => (count[cfg.results[p.key].name] = (count[cfg.results[p.key].name] || 0) + 1));
+        const dups = people.filter((p) => p.dup).length;
+        info(people.length + " Karten auf " + Math.ceil(people.length / PER_SHEET) + " Seite(n) · " +
+          Object.entries(count).map(([k, n]) => n + "× " + k).join(", ") +
+          (dups ? " · " + dups + " Name(n) doppelt, neueste Antwort genommen" : ""), dups > 0);
+      }
+
+      function card(p) {
+        const r = cfg.results[p.key];
+        const c = document.createElement("div");
+        c.className = "card";
+        c.style.setProperty("--c", r.color || "#2a2622");
+        c.innerHTML =
+          '<div class="top"><div class="emoji"></div><div><div class="who" contenteditable></div><div class="flavor"></div></div></div>' +
+          '<div class="line" contenteditable></div><div class="reason" contenteditable></div>' +
+          '<div class="tools"><button type="button" data-a="line">Spruch ↻</button><button type="button" data-a="reason">Grund ↻</button>' +
+          '<button type="button" data-a="remove">✕</button></div>' + (p.dup ? '<div class="dup">doppelt</div>' : "");
+        c.querySelector(".emoji").textContent = r.emoji;
+        c.querySelector(".who").textContent = p.name + ", du bist";
+        c.querySelector(".flavor").textContent = r.name;
+        c.querySelector(".line").textContent = p.line;
+        c.querySelector(".reason").textContent = p.reason;
+        c.querySelector(".who").addEventListener("input", (e) => (p.name = e.target.textContent.replace(/, du bist$/, "")));
+        c.querySelector(".line").addEventListener("input", (e) => (p.line = e.target.textContent));
+        c.querySelector(".reason").addEventListener("input", (e) => (p.reason = e.target.textContent));
+        c.querySelector(".tools").addEventListener("click", (e) => {
+          const a = e.target.dataset.a;
+          if (a === "line") { const others = r.lines.filter((l) => l !== p.line); p.line = pick(others.length ? others : r.lines); }
+          if (a === "reason") p.reason = reasonFor(p);
+          if (a === "remove") people.splice(people.indexOf(p), 1);
+          if (a) render();
+        });
+        return c;
+      }
+
+      function readFile(file) {
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => load(String(reader.result));
+        reader.readAsText(file, "UTF-8");
+      }
+
+      document.getElementById("file").addEventListener("change", (e) => readFile(e.target.files[0]));
+      const drop = document.getElementById("drop");
+      ["dragenter", "dragover"].forEach((t) => document.addEventListener(t, (e) => { e.preventDefault(); drop.classList.add("over"); }));
+      ["dragleave", "drop"].forEach((t) => document.addEventListener(t, (e) => { e.preventDefault(); drop.classList.remove("over"); }));
+      document.addEventListener("drop", (e) => readFile(e.dataTransfer.files[0]));
+      document.getElementById("print").addEventListener("click", () => window.print());
+      document.getElementById("reshuffle").addEventListener("click", () => {
+        people.forEach((p) => { p.line = pick(cfg.results[p.key].lines); p.reason = reasonFor(p); });
+        render();
+      });
+      window.loadCsv = load;   // for testing from the console
+    </script>
+  </body>
+</html>
