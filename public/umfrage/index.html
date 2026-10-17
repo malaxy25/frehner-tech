@@ -6,9 +6,9 @@
     <title>Welcher Frühstücks-Typ bist du?</title>
     <meta name="robots" content="noindex" />
     <meta name="description" content="9 Fragen, 1 Minute: Finde heraus, welcher Frühstücks-Typ du bist." />
-    <link rel="canonical" href="https://frehner.tech/muesli/" />
+    <link rel="canonical" href="https://frehner.tech/umfrage/" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://frehner.tech/muesli/" />
+    <meta property="og:url" content="https://frehner.tech/umfrage/" />
     <meta property="og:title" content="Welcher Frühstücks-Typ bist du?" />
     <meta property="og:description" content="9 Fragen, 1 Minute: Finde es heraus." />
     <meta property="og:site_name" content="frehner.tech" />
@@ -21,9 +21,35 @@
     <meta name="theme-color" content="#0e1c1b" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
+    <nav class="nav" aria-label="Hauptmenü">
+      <div class="nav-inner">
+        <a class="nav-home" href="/"><img src="/wappen.png" alt="" />frehner.tech</a>
+        <ul class="menu" id="menu">
+          <li><a href="/#ueber-mich">Über mich</a></li>
+          <li class="has-sub">
+            <button class="sub-toggle" type="button" aria-expanded="false" aria-controls="sub-projekte">
+              Projekte
+              <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+            </button>
+            <ul class="submenu" id="sub-projekte">
+              <li><a href="/#projekte">Alle Projekte</a></li>
+              <li><a href="/#klaxon">Klaxon</a></li>
+              <li><a href="/#verbalis">Verbalis</a></li>
+            </ul>
+          </li>
+          <li><a href="/umfrage/" aria-current="page">Umfrage</a></li>
+          <li><a href="/#herkunft">Herkunft</a></li>
+          <li><a href="/#kontakt">Kontakt</a></li>
+        </ul>
+        <button class="nav-icon nav-toggle" type="button" aria-label="Menü" aria-expanded="false" aria-controls="menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </nav>
     <div class="wrap quiz">
       <header>
         <div class="eyebrow">Kleine Umfrage</div>
@@ -37,16 +63,16 @@
 
       <footer>
         <img src="/wappen.png" alt="" />
-        <span>© <span id="y"></span> Familie Frehner · v1.7.0</span>
+        <span>© <span id="y"></span> Familie Frehner · v1.8.0</span>
       </footer>
     </div>
-    <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
+    <script src="/site.js"></script>
     <script>
       // EDIT: Fragen, Antworten und Sprüche hier anpassen. Jede Antwort gibt Punkte für einen oder mehrere Geschmäcker;
       // der Geschmack mit den meisten Punkten gewinnt (bei Gleichstand zufällig). Neue Fragen ergeben im Sheet neue Spalten.
       window.UMFRAGE = {
         id: "muesli",
-        endpoint: "",   // EDIT: /exec-URL der Apps-Script-Web-App (tools/umfrage/apps-script.js)
+        endpoint: "https://script.google.com/macros/s/AKfycbzlAEStvdEmZLmok3qHpbK0iQ_cXnH1aC0mWstEjP4EnZEomnEXoGntAebslpaT86sF/exec",   // /exec-URL der Apps-Script-Web-App (tools/umfrage/apps-script.js)
         intro: "Wie heisst du?",
         results: {
           schoko: {

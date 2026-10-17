@@ -14,4 +14,4 @@ Personal site (static, no build step). Everything that goes online is in `public
 5. Wait for DNS + TLS. Done.
 
 ## Edit
-Content lives in `public/index.html` and `public/platzhalter/index.html`. Look for the `EDIT:` comments. See `CLAUDE.md` for the rules (mobile, share previews, versioning).
+Content lives in `public/index.html` and `public/umfrage/index.html`. Look for the `EDIT:` comments. See `CLAUDE.md` for the rules (mobile, share previews, versioning).

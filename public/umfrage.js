@@ -1,4 +1,4 @@
-// Generic quiz: renders window.UMFRAGE (see public/muesli/index.html), scores the answers,
+// Generic quiz: renders window.UMFRAGE (see public/umfrage/index.html), scores the answers,
 // shows the result and sends everything to the Apps Script (tools/umfrage/apps-script.js).
 // Config shape:
 //   { id, endpoint, results: { key: { name, emoji, lines: [..] } },
