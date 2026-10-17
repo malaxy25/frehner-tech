@@ -2,7 +2,7 @@
 
 ## Zusammenarbeit
 - Kurz und fachlich antworten, kein Smalltalk.
-- Kritisch sein: Anforderungen hinterfragen, Risiken und bessere Alternativen offen ansprechen, bevor umgesetzt wird.
+- Kritisch sein: Anforderungen hinterfragen, bessere Alternativen vorschlagen.
 - Texte für die Website: kein ß (immer ss), kein Komma vor «und».
 
 Persönliche Website von Andrea Frehner. Statisches HTML/CSS/JS ohne Build-Schritt, deployt als Render Static Site (Publish-Verzeichnis `.`). Sprache der Inhalte: Deutsch (Schweiz).
