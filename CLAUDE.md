@@ -17,6 +17,11 @@ Persönliche Website von Andrea Frehner. Statisches HTML/CSS/JS ohne Build-Schri
 
 Die Navigation (`<nav class="nav">`) steht als identischer Block in jeder Seite. Bei Änderungen am Menü **alle Seiten** anpassen; auf der jeweiligen Seite den eigenen Link mit `aria-current="page"` markieren. Links auf Abschnitte der Startseite immer absolut (`/#projekte`), damit sie auch von Unterseiten funktionieren.
 
+## Projekt-Karten
+- Alle Karten in `public/index.html` haben denselben Aufbau: Titel + Version, Beschreibung, Knopfzeile (Hauptaktion, GitHub, Neuerungen), Hinweis. Neues Projekt = Karte kopieren (Anleitung im `EDIT:`-Kommentar) und im Menü unter «Projekte» ergänzen.
+- `data-repo="owner/name"`: Version und Download-Links kommen aus dem neuesten GitHub-Release; Version und Links im HTML sind der Ersatzwert und bei neuen Releases nachführen.
+- Voraussetzung: Das Projekt veröffentlicht GitHub-Releases (Klaxon und Verbalis per Workflow nach grüner CI).
+
 ## Umfragen
 - Inhalt (Fragen, Antworten, Punkte, Ergebnisse, Sprüche) steht nur in `public/umfrage/config.js`. `umfrage.js`, Apps Script und Karten bleiben bei Änderungen unberührt.
 - `showResult: false`: Teilnehmende sehen nur ein Danke, das Ergebnis kommt erst auf die Karte (Weihnachtsgeschenk). Ergebnis und Spruch nie auf der Seite oder im Browser-Speicher zeigen.

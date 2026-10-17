@@ -21,15 +21,9 @@ h2{font-size:1.1rem;text-transform:uppercase;letter-spacing:1px;color:var(--acce
   border-bottom:1px solid var(--line);padding-bottom:.4em;margin-bottom:.9em;}
 p{color:#cdd8d3;margin:0 0 1em;}
 .cards{display:grid;gap:14px;}
-a.card{display:block;text-decoration:none;color:inherit;background:var(--panel);
-  border:1px solid var(--line);border-radius:14px;padding:18px 20px;transition:border-color .2s,transform .1s;}
-a.card:hover{border-color:var(--accent);transform:translateY(-1px);}
-a.card .t{font-weight:700;font-size:1.1rem;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
-a.card .d{color:var(--muted);font-size:.95rem;margin-top:.2em;}
-a.card .go{color:var(--accent);font-family:ui-monospace,Menlo,monospace;font-size:.85rem;margin-top:.6em;}
-div.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;}
-div.card .t{font-weight:700;font-size:1.1rem;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
-div.card .d{color:var(--muted);font-size:.95rem;margin-top:.2em;}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;}
+.card .t{font-weight:700;font-size:1.1rem;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
+.card .d{color:var(--muted);font-size:.95rem;margin-top:.2em;}
 .version{font-family:ui-monospace,Menlo,monospace;font-size:.8rem;font-weight:400;color:var(--accent2);
   border:1px solid var(--line);border-radius:999px;padding:1px 9px;}
 .downloads{display:flex;flex-wrap:wrap;gap:10px;margin-top:.9em;align-items:center;}
